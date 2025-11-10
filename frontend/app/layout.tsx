@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Header from "./components/Header";
 import { Providers } from "./providers";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "FATIH-style",
@@ -12,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const currentYear = new Date().getFullYear();
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -21,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <Providers>
           <div className="bg-[#8a0012] text-white text-sm">
             <div className="container-base py-2 text-center">
@@ -111,6 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </footer>
         </Providers>
+        <Toaster position="bottom-right" />
       </body>
     </html>
   );

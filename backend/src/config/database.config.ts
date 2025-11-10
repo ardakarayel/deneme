@@ -5,12 +5,14 @@ import { LoginLog } from '../auth/login-log.entity';
 import { Cart } from '../cart/cart.entity';
 import { CartItem } from '../cart/cart-item.entity';
 import { Product } from '../product/product.entity';
+import { ProductVariant } from '../product/product-variant.entity';
 import { User } from '../users/user.entity';
 
 type Overrides = Partial<MysqlConnectionOptions>;
 
 const DEFAULT_ENTITIES: MysqlConnectionOptions['entities'] = [
   Product,
+  ProductVariant,
   User,
   AuthToken,
   Cart,
