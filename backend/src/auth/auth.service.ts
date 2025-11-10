@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthToken } from './auth-token.entity';
 import { LoginLog } from './login-log.entity';
-
+// comment
 
 // Auth logic: hash password, validate user, return JWT
 //Functions that perform the main operations related to the user are defined
