@@ -42,7 +42,7 @@ export const getDatabaseConfig = (overrides: Overrides = {}): MysqlConnectionOpt
     username: process.env.DB_USERNAME ?? 'root',
     password: process.env.DB_PASSWORD ?? '1234',
     database: process.env.DB_NAME ?? 'onlinestore',
-    synchronize: coerceBoolean(process.env.TYPEORM_SYNC, true),
+    synchronize: coerceBoolean(process.env.TYPEORM_SYNC, false),
     logging: coerceBoolean(process.env.TYPEORM_LOGGING, true),
     entities: entities ?? DEFAULT_ENTITIES,
     migrations: migrations ?? DEFAULT_MIGRATIONS,

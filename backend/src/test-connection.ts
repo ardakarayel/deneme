@@ -10,7 +10,7 @@ const testConnection = new DataSource({
     password: "1234", // MySQL kurarken verdiğin şifre
     database: "onlinestore",
     entities: [Product],
-    synchronize: true, // tabloyu oluşturmayı denesin
+    synchronize: false, // tabloyu oluşturmayı denesin
 });
 
 async function main() {
