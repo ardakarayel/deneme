@@ -8,9 +8,11 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
-  async create(@Body() dto: CreateProductDto) {
-    return this.productService.create(dto);
-  }
+async create(@Body() dto: CreateProductDto) {
+  console.log("📥 GELEN DTO ===>", dto);   // 🔥 ZORUNLU LOG
+  return this.productService.create(dto);
+}
+
 
   @Get()
   async findAll(@Query('search') search?: string) {
@@ -20,6 +22,11 @@ export class ProductController {
   @Get('search')
   async search(@Query('name') name?: string) {
     return this.productService.findByName(name ?? '');
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.productService.findOne(id);
   }
 
   @Delete(':id')
@@ -36,4 +43,8 @@ export class ProductController {
   async upsertVariant(@Param('id') id: string, @Body() dto: CreateVariantDto) {
     return this.productService.upsertVariant(id, dto);
   }
+
+  
 }
+
+

@@ -17,5 +17,6 @@ export class CartItem {
 
   @Column('int', { default: 1 })
   quantity: number;
+  
 }
 

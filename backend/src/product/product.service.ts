@@ -15,7 +15,10 @@ export class ProductService {
     private productVariantRepository: Repository<ProductVariant>,
   ) {}
 
+  // 🔥 TEK VE DOĞRU CREATE METODU
   async create(dto: CreateProductDto): Promise<Product> {
+    console.log("📦 SERVICE CREATE DTO:", dto);
+
     const newProduct = this.productRepository.create(dto);
     return this.productRepository.save(newProduct);
   }
@@ -28,6 +31,19 @@ export class ProductService {
         .getMany();
     }
     return this.productRepository.find();
+  }
+
+  async findOne(id: string): Promise<Product> {
+    const product = await this.productRepository.findOne({
+      where: { id },
+      relations: ['variants'],
+    });
+
+    if (!product) {
+      throw new NotFoundException('Product not found');
+    }
+
+    return product;
   }
 
   async deleteProduct(id: string): Promise<{ message: string; deletedId: string }> {
