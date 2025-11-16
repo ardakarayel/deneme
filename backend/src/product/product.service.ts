@@ -5,6 +5,7 @@ import { Product } from './product.entity';
 import { CreateProductDto } from './create-product.dto';
 import { ProductVariant } from './product-variant.entity';
 import { CreateVariantDto } from './variants/create-variant.dto';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class ProductService {
@@ -19,8 +20,35 @@ export class ProductService {
   async create(dto: CreateProductDto): Promise<Product> {
     console.log("📦 SERVICE CREATE DTO:", dto);
 
-    const newProduct = this.productRepository.create(dto);
-    return this.productRepository.save(newProduct);
+    const { variants = [], ...productData } = dto as CreateProductDto & {
+      variants?: CreateVariantDto[];
+    };
+
+    const newProduct = this.productRepository.create({
+      ...productData,
+      id: uuidv4(),
+    });
+
+    const savedProduct = await this.productRepository.save(newProduct);
+
+    if (variants.length) {
+      const variantEntities = variants.map((variant) =>
+        this.productVariantRepository.create({
+          id: uuidv4(),
+          product: savedProduct,
+          size: variant.size,
+          color: variant.color,
+          stock: variant.stock,
+        }),
+      );
+
+      const savedVariants = await this.productVariantRepository.save(
+        variantEntities,
+      );
+      savedProduct.variants = savedVariants;
+    }
+
+    return savedProduct;
   }
 
   async findAll(search?: string): Promise<Product[]> {

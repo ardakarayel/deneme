@@ -1,4 +1,6 @@
-import { IsNotEmpty, IsOptional, IsString, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsNumber, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { CreateVariantDto } from './variants/create-variant.dto';
 
 export class CreateProductDto {
   @IsNotEmpty()
@@ -29,11 +31,13 @@ export class CreateProductDto {
   @IsString()
   description?: string;
 
-  @IsOptional()
-  @IsString()
-  color?: string;
+  // SİLME → artık product içinde color/size yok
+  // color?: string;
+  // size?: string;
 
+  // 🔥 ASIL EKLEMEMİZ GEREKEN KISIM
   @IsOptional()
-  @IsString()
-  size?: string;
+  @ValidateNested({ each: true })
+  @Type(() => CreateVariantDto)
+  variants?: CreateVariantDto[];
 }
