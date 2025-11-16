@@ -4,36 +4,33 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const tabs = [
-  { label: "Ekleme", href: "/admin/products/add" },
-  { label: "Silme", href: "/admin/products/delete" },
-  { label: "Güncelleme", href: "/admin/products/update" },
-  { label: "Arama", href: "/admin/products/search" },
+  { name: "Listele", href: "/admin/products" },
+  { name: "Ara", href: "/admin/products/search" },
+  { name: "Ekle", href: "/admin/products/add" },
+  { name: "Güncelle", href: "/admin/products/update" },
+  { name: "Sil", href: "/admin/products/delete" },
 ];
 
 export default function AdminProductTabs() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex flex-wrap gap-4 border-b border-[var(--line)] pb-3 text-sm">
+    <div className="flex gap-3 border-b pb-2 mb-4">
       {tabs.map((tab) => {
-        const isActive =
-          pathname === tab.href ||
-          (tab.href === "/admin/products/add" && pathname === "/admin/products");
+        const isActive = pathname === tab.href;
 
         return (
           <Link
             key={tab.href}
             href={tab.href}
-            className={`pb-1 transition-colors ${
-              isActive
-                ? "border-b-2 border-[#7a0025] font-semibold text-[#7a0025]"
-                : "text-neutral-500 hover:text-neutral-800"
-            }`}
+            className={`px-3 py-1 rounded-md text-sm font-medium transition
+              ${isActive ? "bg-black text-white" : "bg-gray-200 hover:bg-gray-300"}
+            `}
           >
-            {tab.label}
+            {tab.name}
           </Link>
         );
       })}
-    </nav>
+    </div>
   );
 }
